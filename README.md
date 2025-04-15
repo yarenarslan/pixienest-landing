@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+#  PixieNest Landing
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+PixieNest is a smart SEO and product research tool built for Etsy sellers. This repository contains the **frontend landing interface**, showcasing features like product analysis, keyword trends, and top Etsy sellers.
 
-## Available Scripts
+> This is the frontend part of the full-stack project [PixieNest](https://github.com/yarenarslan/pixienest-backend) powered by React + Bootstrap.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🌐 Live Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+_Localhost Preview:_
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+npm install
+npm start
 
-### `npm test`
+App will run on: http://localhost:3000
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## 📁 Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+pixienest-landing/
+├── public/
+├── src/
+│   ├── components/
+│   │   └── Navbar.js, ProductList.js
+│   ├── pages/
+│   │   └── Dashboard.js, ProductsPage.js, KeywordsPage.js, SellersPage.js
+│   ├── App.js
+│   ├── index.js
+├── package.json
+└── README.md
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Features
+💡 Dashboard: Introduction + Features
 
-### `npm run eject`
+📈 ProductsPage: Trending Etsy products with sales data
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+🔍 KeywordsPage: SEO insights with competition level & trend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+🛍️ SellersPage: Top Etsy sellers and shop metrics
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+🎨 Responsive UI using React-Bootstrap
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+🔗 Connects to a FastAPI backend via REST API
 
-## Learn More
+## 🛠️ Setup Instructions
+1. Clone the Repository
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+git clone https://github.com/yarenarslan/pixienest-landing.git
+cd pixienest-landing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Install Dependencies
 
-### Code Splitting
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Start the React App
 
-### Analyzing the Bundle Size
+npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Frontend will be available at: http://localhost:3000
 
-### Making a Progressive Web App
+Make sure the backend is also running on http://localhost:8000 for API calls.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🧩 Related Projects
+## 🔧 PixieNest Backend (FastAPI)
 
-### Advanced Configuration
+## 📬 Contact
+For suggestions or issues, reach out via yarenarslan0997@gmail.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
