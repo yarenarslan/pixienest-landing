@@ -1,0 +1,8 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  .transition-hover:hover {
+    transform: rotate(12deg) scale(1.2);
+  }
+  
