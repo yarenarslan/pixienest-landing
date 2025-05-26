@@ -17,6 +17,7 @@ import Settings from "@/pages/dashboard/settings";
 
 import SignIn from "@/pages/auth/sign-in";
 import SignUp from "@/pages/auth/sign-up";
+import ForgotPassword from "@/pages/auth/forgot-password";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -79,6 +80,10 @@ export const routes = [
         name: "sign up",
         path: "/sign-up",
         element: <SignUp />,
+      },
+      {
+        path: "/auth/forgot-password",
+        element: <ForgotPassword />,
       },
     ],
   },

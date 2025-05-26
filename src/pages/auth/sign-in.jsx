@@ -118,17 +118,6 @@ export function SignIn() {
             </Typography>
           </div>
 
-          <div className="space-y-4 mt-8">
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
-              <img src="/img/google.svg" alt="Google" className="w-5 h-5" />
-              <span>Sign in With Google</span>
-            </Button>
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
-              <img src="/img/twitter-logo.svg" height={24} width={24} alt="Twitter" />
-              <span>Sign in With Twitter</span>
-            </Button>
-          </div>
-
           <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
             Not registered?
             <Link to="/auth/sign-up" className="text-gray-900 ml-1">
