@@ -66,7 +66,7 @@ export default function ProductsPage() {
             Explore the most sold and favorited products recently.
           </Typography>
         </div>
-        <Tooltip content="These insights are based on real-time Etsy data.">
+        <Tooltip content="These insights are based on Etsy product data from the last 30 days.">
           <InformationCircleIcon className="h-5 w-5 text-blue-500 cursor-pointer" />
         </Tooltip>
       </div>

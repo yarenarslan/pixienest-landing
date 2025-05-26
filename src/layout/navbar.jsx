@@ -5,19 +5,20 @@ import {
   Navbar as MTNavbar,
   Collapse,
   Typography,
-  Button,
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-export function Navbar({ brandName, routes, action }) {
+export function Navbar({ brandName = "PixieNest", routes = [] }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
+    const handleResize = () => {
+      if (window.innerWidth >= 960) setOpenNav(false);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const navList = (
@@ -43,20 +44,17 @@ export function Navbar({ brandName, routes, action }) {
   );
 
   return (
-    <MTNavbar className="p-3">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+    <MTNavbar className="p-3 shadow-md border border-blue-gray-50">
+      <div className="container mx-auto flex items-center justify-between">
         <Link to="/">
           <Typography
             variant="small"
-            className="mr-4 ml-2 cursor-pointer py-1.5 font-bold"
+            className="mr-4 ml-2 cursor-pointer py-1.5 font-bold text-2xl text-black"
           >
             {brandName}
           </Typography>
         </Link>
         <div className="hidden lg:block">{navList}</div>
-        {React.cloneElement(action, {
-          className: "hidden lg:inline-block",
-        })}
         <IconButton
           variant="text"
           size="sm"
@@ -71,37 +69,17 @@ export function Navbar({ brandName, routes, action }) {
         </IconButton>
       </div>
       <Collapse open={openNav}>
-        <div className="container mx-auto">
-          {navList}
-          {React.cloneElement(action, {
-            className: "w-full block lg:hidden",
-          })}
-        </div>
+        <div className="container mx-auto">{navList}</div>
       </Collapse>
     </MTNavbar>
   );
 }
 
-Navbar.defaultProps = {
-  brandName: "Material Tailwind React",
-  action: (
-    <a
-      href="https://www.creative-tim.com/product/material-tailwind-dashboard-react"
-      target="_blank"
-    >
-      <Button variant="gradient" size="sm" fullWidth>
-        free download
-      </Button>
-    </a>
-  ),
-};
-
 Navbar.propTypes = {
   brandName: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  action: PropTypes.node,
+  routes: PropTypes.arrayOf(PropTypes.object),
 };
 
 Navbar.displayName = "/src/widgets/layout/navbar.jsx";
 
-export default Navbar;
+export default Navbar

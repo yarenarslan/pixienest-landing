@@ -235,3 +235,7 @@ export function Configurator() {
 Configurator.displayName = "/src/widgets/layout/configurator.jsx";
 
 export default Configurator;
+
+// TODO: GitHub yıldızları kendi PixieNest reposuyla değiştirilecek
+// TODO: Creative Tim dış linkleri kaldırılacak
+// TODO: Sosyal medya butonları kişiselleştirilecek

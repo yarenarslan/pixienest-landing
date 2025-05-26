@@ -11,7 +11,8 @@ import {
 } from "@material-tailwind/react";
 import axios from "axios";
 import { Sparklines, SparklinesLine } from "react-sparklines";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,23 +23,20 @@ export function Home() {
   const [topFavorited, setTopFavorited] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
 
+  const token = localStorage.getItem("access_token");
+
   const toggleDark = () => setDarkMode(!darkMode);
 
   useEffect(() => {
+    const config = token
+      ? {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      : {};
+
     const fetchData = async () => {
-      const token = localStorage.getItem("access_token");
-
-      if (!token) {
-        console.warn("No token found.");
-        return;
-      }
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
       try {
         const [products, sellers, favorited, keywords] = await Promise.all([
           axios.get(`${API_URL}/api/dashboard/top-products`, config),
@@ -52,12 +50,60 @@ export function Home() {
         setTopFavorited(favorited.data);
         setTopKeywords(keywords.data);
       } catch (err) {
-        console.error("Dashboard veri çekilemedi:", err);
+        console.warn("Veri alınamadı. Giriş yapmamış olabilirsiniz.");
       }
     };
 
     fetchData();
-  }, []);
+  }, [token]);
+
+  const exportCSV = () => {
+    const sections = [];
+
+    if (topProducts.length) {
+      sections.push("Top Products");
+      sections.push("Title,Sales");
+      topProducts.forEach((item) =>
+        sections.push(`"${item.title.replace(/"/g, '""')}",${item.total_sales}`)
+      );
+      sections.push("");
+    }
+
+    if (topFavorited.length) {
+      sections.push("Top Favorited");
+      sections.push("Title,Favorites");
+      topFavorited.forEach((item) =>
+        sections.push(`"${item.title.replace(/"/g, '""')}",${item.favorites}`)
+      );
+      sections.push("");
+    }
+
+    if (topSellers.length) {
+      sections.push("Top Sellers");
+      sections.push("Shop Name,Total Sales,Product Count");
+      topSellers.forEach((item) =>
+        sections.push(`"${item.shop_name.replace(/"/g, '""')}",${item.total_sales},${item.product_count}`)
+      );
+      sections.push("");
+    }
+
+    if (topKeywords.length) {
+      sections.push("Top Keywords");
+      sections.push("Keyword,Count");
+      topKeywords.forEach((item) =>
+        sections.push(`"${item.keyword.replace(/"/g, '""')}",${item.count}`)
+      );
+    }
+
+    const blob = new Blob([sections.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "dashboard_summary.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const renderTrend = (value) => {
     if (value > 50) return <span className="ml-2 text-green-500 font-bold">↑</span>;
@@ -83,7 +129,7 @@ export function Home() {
   );
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-gray-50"} p-6 min-h-screen transition`}>
+    <div className={`p-6 min-h-screen transition ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50"}`}>
       {/* Üst panel */}
       <div className="flex justify-between items-start mb-6 flex-wrap gap-6">
         <div>
@@ -97,7 +143,19 @@ export function Home() {
 
         <div className="flex items-center gap-4">
           <Switch label="Dark Mode" checked={darkMode} onChange={toggleDark} />
-          <Button size="sm" variant="outlined">Export CSV</Button>
+          <Button
+            size="sm"
+            variant="outlined"
+            onClick={() => {
+              if (!token) {
+                toast.warn("🔒 You must be signed in to download.");
+              } else {
+                exportCSV();
+              }
+            }}
+          >
+            Export CSV
+          </Button>
         </div>
       </div>
 
@@ -175,6 +233,9 @@ export function Home() {
           </li>
         ))}
       </div>
+
+      {/* Toast container */}
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar />
     </div>
   );
 }

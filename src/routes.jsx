@@ -1,7 +1,5 @@
 import {
   HomeIcon,
-  TableCellsIcon,
-  InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
   ShoppingBagIcon,
@@ -10,19 +8,15 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 
-import {
-  Home,
-  Tables,
-  Notifications,
-} from "@/pages/dashboard";
-
-import { SignIn, SignUp } from "@/pages/auth";
-
+import Home from "@/pages/dashboard/home";
 import Products from "@/pages/dashboard/products";
 import Keywords from "@/pages/dashboard/keywords";
 import Sellers from "@/pages/dashboard/sellers";
 import Seo from "@/pages/dashboard/seo";
 import Settings from "@/pages/dashboard/settings";
+
+import SignIn from "@/pages/auth/sign-in";
+import SignUp from "@/pages/auth/sign-up";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -37,18 +31,6 @@ export const routes = [
         name: "dashboard",
         path: "home",
         element: <Home />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
-        element: <Tables />,
-      },
-      {
-        icon: <InformationCircleIcon {...icon} />,
-        name: "notifications",
-        path: "/notifications",
-        element: <Notifications />,
       },
       {
         icon: <ShoppingBagIcon {...icon} />,

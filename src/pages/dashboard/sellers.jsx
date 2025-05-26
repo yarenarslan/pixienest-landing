@@ -45,11 +45,11 @@ export default function Sellers() {
           const sorted = uniqueSellers.sort((a, b) => b.total_sales - a.total_sales);
           setSellers(sorted);
         } else {
-          setError("Satıcı verisi alınamadı.");
+          setError("Failed to load seller data.");
         }
       } catch (err) {
         console.error("Failed to fetch sellers:", err);
-        setError("Veri alınırken hata oluştu.");
+        setError("Error while fetching data.");
       }
     };
 
@@ -58,7 +58,7 @@ export default function Sellers() {
         const res = await axios.get(`${API_URL}/api/sellers/top-daily`);
         setTopSellersChart(res.data);
       } catch (err) {
-        console.error("Grafik verisi alınamadı", err);
+        console.error("Failed to fetch chart data", err);
       }
     };
 
@@ -80,7 +80,7 @@ export default function Sellers() {
       {
         label: "Daily Sales",
         data: topSellersChart.map((s) => s.total_sales),
-        backgroundColor: "#3b82f6",
+        backgroundColor: "#6366f1", // Keywords grafiği ile aynı renk
         borderRadius: 6,
       },
     ],
@@ -100,12 +100,14 @@ export default function Sellers() {
         grid: { display: false },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-gray-50 min-h-screen">
       <div className="mb-6">
-        <Typography variant="h4" className="font-bold flex items-center gap-2">
+        <Typography variant="h4" className="font-bold flex items-center gap-2 text-indigo-700">
           🏪 Top Sellers Overview
         </Typography>
         <Typography variant="small" className="text-gray-600">
@@ -113,23 +115,37 @@ export default function Sellers() {
         </Typography>
       </div>
 
+      {/* Günlük Satış Grafiği */}
       <Card className="mb-6 p-4 shadow-md border">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Typography variant="h6">📊 Daily Top Sellers</Typography>
+            <Typography variant="h6" className="text-blue-gray-800 font-semibold">
+              📊 Daily Top Sellers
+            </Typography>
             <Tooltip content="These are the top Etsy shops based on daily sales performance.">
               <InformationCircleIcon className="h-5 w-5 text-blue-500 cursor-pointer" />
             </Tooltip>
           </div>
         </div>
-        <Bar data={chartData} options={chartOptions} />
+        <div className="w-full md:h-[300px]">
+          {topSellersChart.length > 0 ? (
+            <Bar data={chartData} options={chartOptions} />
+          ) : (
+            <Typography variant="small" className="text-center text-gray-500">
+              Loading chart...
+            </Typography>
+          )}
+        </div>
       </Card>
 
+      {/* Satıcı Kartları */}
       <Card className="p-4 shadow-md border">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Typography variant="h6">🏆 Most Successful Etsy Shops</Typography>
-            <Tooltip content="Filtered by most recent and highest performing shops over 5 days.">
+            <Typography variant="h6" className="text-blue-gray-800 font-semibold">
+              🏆 Most Successful Etsy Shops
+            </Typography>
+            <Tooltip content="These rankings reflect seller performance over the past 30 days.">
               <InformationCircleIcon className="h-5 w-5 text-blue-500 cursor-pointer" />
             </Tooltip>
           </div>

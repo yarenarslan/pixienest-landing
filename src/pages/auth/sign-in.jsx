@@ -19,25 +19,26 @@ export function SignIn() {
     e.preventDefault();
     setError("");
 
-      try {
-         const res = await axios.post(
-            `${API_URL}/users/auth/login`,
-             { email, password },
-             { withCredentials: true }
-          );
+    try {
+      const res = await axios.post(
+        `${API_URL}/users/auth/login`,
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-          const token = res.data?.access_token;
-          if (token) {
-            localStorage.setItem("access_token", token); // doğru key
-            navigate("/dashboard/home");
-          } else {
-             setError("Login failed. No token received.");
-          }
-       } catch (err) {
-         setError("Invalid email or password.");
-       }
-     };
-
+      const token = res.data?.access_token;
+      if (token) {
+        localStorage.setItem("access_token", token);
+        console.log("✅ Token kaydedildi:", token);
+        navigate("/dashboard/home");
+      } else {
+        setError("Login failed. No token received.");
+      }
+    } catch (err) {
+      console.error("❌ Login hatası:", err.response?.data || err.message);
+      setError("Invalid email or password.");
+    }
+  };
 
   return (
     <section className="m-4 lg:m-8 flex flex-col-reverse lg:flex-row gap-4">
