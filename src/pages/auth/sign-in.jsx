@@ -29,13 +29,12 @@ export function SignIn() {
       const token = res.data?.access_token;
       if (token) {
         localStorage.setItem("access_token", token);
-        console.log("✅ Token kaydedildi:", token);
         navigate("/dashboard/home");
       } else {
         setError("Login failed. No token received.");
       }
     } catch (err) {
-      console.error("❌ Login hatası:", err.response?.data || err.message);
+      console.error("❌ Login error:", err.response?.data || err.message);
       setError("Invalid email or password.");
     }
   };
