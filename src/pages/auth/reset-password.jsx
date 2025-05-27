@@ -20,9 +20,9 @@ export default function ResetPassword() {
     e.preventDefault();
     setError("");
     try {
-      await axios.post(`https://pixienest-backend.onrender.com/auth/reset-password/${token}`, {
-        new_password: newPassword,
-      });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/user/reset-password/${token}`, {
+       new_password: newPassword,
+     });
       setSuccess(true);
       setTimeout(() => navigate("/auth/login"), 2000);
     } catch (err) {
