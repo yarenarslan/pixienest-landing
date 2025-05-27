@@ -19,7 +19,7 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/auth/reset-password/:id" element={<ResetPassword />} />
+      <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
 
       {/* 🔓 Giriş / kayıt sayfaları */}
       <Route path="/auth/*" element={<Auth />} />
