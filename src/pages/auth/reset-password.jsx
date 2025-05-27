@@ -19,10 +19,15 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    const url = `${import.meta.env.VITE_API_URL}/auth/reset-password/${token}`;
+    console.log("API URL:", url);
+
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/user/reset-password/${token}`, {
-       new_password: newPassword,
-     });
+      await axios.post(url, {
+        new_password: newPassword,
+      });
+
       setSuccess(true);
       setTimeout(() => navigate("/auth/login"), 2000);
     } catch (err) {
