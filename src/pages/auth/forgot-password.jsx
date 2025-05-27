@@ -10,7 +10,7 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       // API endpoint'in varsa buraya yaz
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/user/forgot-password`, { email });
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, { email });
       setMessage("Reset link sent to your email.");
     } catch (err) {
       setMessage("An error occurred. Please try again.");
