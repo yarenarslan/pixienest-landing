@@ -1,44 +1,83 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  Input,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
 import axios from "axios";
-import { Input, Button, Typography } from "@material-tailwind/react";
 
 export default function ResetPassword() {
-  const { id } = useParams();
+  const { token } = useParams();
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const API_URL = import.meta.env.VITE_API_URL;
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleReset = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
     try {
-      const res = await axios.post(`${API_URL}/api/user/reset-password`, {
-        user_id: parseInt(id),
+      await axios.post(`https://pixienest-backend.onrender.com/auth/reset-password/${token}`, {
         new_password: newPassword,
       });
-      setMessage(res.data.message);
-      setTimeout(() => navigate("/auth/sign-in"), 1500);
+      setSuccess(true);
+      setTimeout(() => navigate("/auth/login"), 2000);
     } catch (err) {
-      setMessage("An error occurred.");
+      setError("Token expired or invalid. Try again.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
-      <Typography variant="h4" className="mb-4">
-        Reset Your Password
-      </Typography>
-      <Input
-        type="password"
-        label="New Password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        className="max-w-xs"
-      />
-      <Button onClick={handleReset} className="mt-4">
-        Submit
-      </Button>
-      {message && <p className="mt-4 text-sm text-green-500">{message}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 px-4">
+      <Card className="w-full max-w-sm p-6 shadow-xl bg-white">
+        <CardBody className="flex flex-col gap-4">
+          <div className="text-center mb-4">
+            <img
+              src="/icons/magic-wand.svg"
+              alt="PixieNest"
+              className="w-8 h-8 mx-auto mb-2"
+            />
+            <Typography variant="h5" className="font-bold text-gray-900">
+              Reset Your Password
+            </Typography>
+            <Typography className="text-sm text-gray-600 mt-1">
+              Enter a new password to reset your account
+            </Typography>
+          </div>
+
+          {success ? (
+            <Typography className="text-green-600 text-center">
+              Password reset successful! Redirecting to login...
+            </Typography>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                type="password"
+                label="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                className="text-black"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold hover:scale-105 transition-transform duration-300"
+              >
+                Submit
+              </Button>
+              {error && (
+                <Typography className="text-red-600 text-sm text-center">
+                  {error}
+                </Typography>
+              )}
+            </form>
+          )}
+        </CardBody>
+      </Card>
     </div>
   );
 }
