@@ -20,7 +20,7 @@ export default function ResetPassword() {
     e.preventDefault();
     setError("");
 
-    const url = `${import.meta.env.VITE_API_URL}/auth/reset-password/${token}`;
+    const url = `${import.meta.env.VITE_API_URL}/users/auth/reset-password/${token}`;
     console.log("API URL:", url);
 
     try {
