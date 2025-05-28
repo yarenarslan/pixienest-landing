@@ -18,6 +18,9 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
     transparent: "bg-transparent",
   };
 
+  // Login kontrolü (token varsa giriş yapılmıştır)
+  const isLoggedIn = localStorage.getItem("token");
+
   return (
     <aside
       className={`${sidenavTypes[sidenavType]} ${
@@ -26,7 +29,7 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
     >
       <div className="relative">
         <Link
-          to="/"
+          to={isLoggedIn ? "/dashboard" : "/"}
           className="py-6 px-4 flex items-center justify-start gap-3 group"
         >
           <img

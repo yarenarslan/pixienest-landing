@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Card,
@@ -19,9 +19,7 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     const url = `${import.meta.env.VITE_API_URL}/users/auth/reset-password/${token}`;
-    console.log("API URL:", url);
 
     try {
       await axios.post(url, {
@@ -29,11 +27,18 @@ export default function ResetPassword() {
       });
 
       setSuccess(true);
-      setTimeout(() => navigate("/auth/login"), 2000);
     } catch (err) {
       setError("Token expired or invalid. Try again.");
     }
   };
+
+  // ✅ Başarıyla şifre yenilendiyse /auth/sign-in sayfasına yönlendir
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => navigate("/auth/sign-in"), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [success, navigate]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 px-4">
@@ -55,7 +60,7 @@ export default function ResetPassword() {
 
           {success ? (
             <Typography className="text-green-600 text-center">
-              Password reset successful! Redirecting to login...
+              Password reset successful! Redirecting to sign-in...
             </Typography>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
