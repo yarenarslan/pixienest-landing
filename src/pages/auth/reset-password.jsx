@@ -19,7 +19,7 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const url = `${import.meta.env.VITE_API_URL}/users/auth/reset-password/${token}`;
+    const url = `${import.meta.env.VITE_API_URL}/auth/reset-password/${token}`;
 
     try {
       await axios.post(url, {
