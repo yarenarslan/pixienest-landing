@@ -38,7 +38,6 @@ export default function SEOAnalysisPage() {
       const res = await axios.get(
         `${API_URL}/api/seo/keyword-insights?keyword=${encodeURIComponent(keyword)}`
       );
-      
       setResult(res.data);
     } catch (err) {
       setError("Unable to fetch SEO analysis. Try again.");
@@ -65,13 +64,8 @@ export default function SEOAnalysisPage() {
       legend: { display: false },
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        grid: { display: false },
-      },
-      x: {
-        grid: { display: false },
-      },
+      y: { beginAtZero: true, grid: { display: false } },
+      x: { grid: { display: false } },
     },
     responsive: true,
     maintainAspectRatio: false,
@@ -100,17 +94,24 @@ export default function SEOAnalysisPage() {
           </Typography>
         </CardHeader>
         <CardBody>
-          <div className="flex gap-4 items-center mb-4">
+          {/* ✅ Mobil uyumlu form alanı ve Enter ile gönderim */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="flex flex-col md:flex-row gap-4 items-stretch mb-4"
+          >
             <Input
               label="Enter keyword (e.g., 'tarot reading')"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               className="flex-1"
             />
-            <Button onClick={handleSubmit} disabled={loading}>
+            <Button type="submit" disabled={loading} className="w-full md:w-auto">
               {loading ? "Analyzing..." : "Analyze"}
             </Button>
-          </div>
+          </form>
 
           {error && (
             <Typography color="red" className="mb-4">
@@ -156,8 +157,7 @@ export default function SEOAnalysisPage() {
                     </Typography>
                     <div className="mb-2">
                       <strong>📌 Suggested Titles:</strong>
-                      {Array.isArray(result.etsy.suggested_titles) &&
-                      result.etsy.suggested_titles.length > 0 ? (
+                      {Array.isArray(result.etsy.suggested_titles) && result.etsy.suggested_titles.length > 0 ? (
                         <ul className="list-disc pl-5 text-gray-700">
                           {result.etsy.suggested_titles.map((title, i) => (
                             <li key={i}>{title}</li>
@@ -171,14 +171,10 @@ export default function SEOAnalysisPage() {
                     </div>
                     <div>
                       <strong>🏷️ Suggested Tags:</strong>
-                      {Array.isArray(result.etsy.suggested_tags) &&
-                      result.etsy.suggested_tags.length > 0 ? (
+                      {Array.isArray(result.etsy.suggested_tags) && result.etsy.suggested_tags.length > 0 ? (
                         <div className="flex flex-wrap gap-2 mt-1">
                           {result.etsy.suggested_tags.map((tag, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-1 text-sm bg-indigo-100 text-indigo-700 rounded"
-                            >
+                            <span key={i} className="px-2 py-1 text-sm bg-indigo-100 text-indigo-700 rounded">
                               #{tag}
                             </span>
                           ))}
@@ -197,8 +193,7 @@ export default function SEOAnalysisPage() {
                   <Typography variant="h6" className="text-blue-gray-800 mb-2">
                     📈 Most Related Keywords
                   </Typography>
-                  {Array.isArray(result.etsy.related_keywords) &&
-                  result.etsy.related_keywords.length > 0 ? (
+                  {Array.isArray(result.etsy.related_keywords) && result.etsy.related_keywords.length > 0 ? (
                     <div className="h-72">
                       <Bar data={chartData} options={chartOptions} />
                     </div>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export default function Landing() {
   return (
     <section className="min-h-screen bg-gray-900 text-white px-4 py-16 flex flex-col items-center justify-center">
+      {/* Başlık */}
       <div className="text-center max-w-3xl">
         <img
           src="/icons/magic-wand.svg"
@@ -14,14 +15,14 @@ export default function Landing() {
           PixieNest
         </Typography>
         <Typography variant="lead" className="text-gray-300 mb-6">
-          A smart SEO and product research tool for Etsy sellers.
+          Optimize Your Etsy Listings. Find Better Keywords. Track What Sells.
         </Typography>
         <Typography className="mb-6 text-lg">
-          <span className="text-gray-300">Start by </span>
-          <span className="text-yellow-400 font-semibold">signing in</span>
-          <span className="text-gray-300"> or </span>
-          <span className="text-yellow-400 font-semibold">joining us now!</span>
+          <span className="text-gray-300">Everything you need to grow on Etsy.</span><br />
+          <span className="text-yellow-400 font-semibold">Join now</span>
+          <span className="text-gray-300"> and start optimizing in minutes.</span>
         </Typography>
+
         <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
           <Link to="/auth/sign-in">
             <Button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_10px_#facc15,0_0_20px_#facc15] transition-transform duration-300">
@@ -35,30 +36,34 @@ export default function Landing() {
             </Button>
           </Link>
         </div>
+
+        <Typography className="text-sm text-gray-400 mt-2">
+          No subscriptions. No spam. Just results.
+        </Typography>
       </div>
 
       {/* Özellikler */}
       <div className="mt-24 max-w-5xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center bg-white p-6 rounded-xl shadow-xl">
-        {[ 
+        {[
           {
-            title: "Discover Trendy Products",
-            icon: "💡",
-            desc: "Find what's hot in your niche and make informed decisions with real data.",
+            title: "Discover Trends Early",
+            icon: "📊",
+            desc: "Track rising products in real time and catch trends before others.",
           },
           {
-            title: "Competitor Analysis",
+            title: "Beat Your Competitors",
             icon: "📈",
-            desc: "Track pricing, reviews, and popularity of similar listings on Etsy.",
+            desc: "Analyze other Etsy listings and learn what drives their success.",
           },
           {
-            title: "Smart SEO Suggestions",
+            title: "Smarter SEO",
             icon: "🔍",
-            desc: "Improve your listings with keyword suggestions and optimized titles.",
+            desc: "Get optimized keyword and title suggestions for visibility.",
           },
           {
-            title: "Save Time",
-            icon: "⏱",
-            desc: "Automated insights that help you grow faster without spending hours.",
+            title: "Save Hours",
+            icon: "⚡",
+            desc: "Insights in seconds — no more manual research or guessing.",
           },
         ].map((f, idx) => (
           <Card key={idx} className="p-6 bg-white text-gray-900 shadow-md">
@@ -74,26 +79,31 @@ export default function Landing() {
       {/* Hakkında */}
       <div className="mt-24 max-w-3xl text-center">
         <Typography variant="h4" className="mb-2 text-white">
-          What Makes <span className="text-yellow-400">PixieNest</span> Different?
+          Why Sellers <span className="text-yellow-400">Choose PixieNest?</span>
         </Typography>
-        <ul className="text-gray-300 mt-6 space-y-2 text-left sm:text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
           {[
-            "✅ Free basic usage – ideal for new sellers",
-            "✅ Combines Etsy + Google SEO for maximum visibility",
-            "✅ Analyze competitor listings and get smarter alternatives",
-            "✅ Browser extension coming soon for on-site real-time analysis",
-            "✅ Personalized suggestions tailored to your listings",
-            "✅ Flexible pay-as-you-go pricing – no subscriptions",
+            "✅ Free basic usage – perfect for beginners",
+            "✅ Etsy + Google SEO combo = powerful results",
+            "✅ Smart alternatives for your listings",
+            "✅ Browser extension (coming soon)",
+            "✅ Pay-as-you-go pricing — no lock-ins",
+            "✅ Clean dashboard, no learning curve",
           ].map((line, idx) => (
-            <li key={idx}>{line}</li>
+            <Card
+              key={idx}
+              className="p-4 bg-white/10 text-white text-sm rounded shadow-sm"
+            >
+              {line}
+            </Card>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* Teknoloji */}
       <div className="mt-24 text-center">
         <Typography variant="h5" className="text-white mb-4">
-          Technologies Used
+          Built with
         </Typography>
         <div className="flex justify-center gap-6 text-lg text-gray-300">
           <span>⚛ React</span>
@@ -103,8 +113,18 @@ export default function Landing() {
         </div>
       </div>
 
+      {/* CTA Son Satır */}
+      <div className="mt-16 text-center">
+        <Typography variant="h6" className="text-yellow-400 mb-2">
+          Still exploring?
+        </Typography>
+        <Typography className="text-gray-300">
+          Sign up free and start discovering what works on Etsy today.
+        </Typography>
+      </div>
+
       <footer className="mt-16 text-gray-400 text-sm text-center">
-        Built with ❤️ by the PixieNest team. Contact: yarenarslan0997@gmail.com
+        Built with ❤️ by Yaren Arslan. Contact: yarenarslan0997@gmail.com
       </footer>
     </section>
   );
