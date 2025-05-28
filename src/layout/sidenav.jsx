@@ -19,7 +19,7 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
   };
 
   // Giriş kontrolü
-  const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("access_token");
 
   return (
     <aside

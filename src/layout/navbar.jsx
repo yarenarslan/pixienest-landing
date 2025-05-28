@@ -15,7 +15,7 @@ export function Navbar({ brandName = "PixieNest", routes = [] }) {
   const location = useLocation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("acceess_token");
     setIsLoggedIn(!!token);
   }, [location.pathname]);
 
