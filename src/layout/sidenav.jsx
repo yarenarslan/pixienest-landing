@@ -18,7 +18,7 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
     transparent: "bg-transparent",
   };
 
-  // Login kontrolü (token varsa giriş yapılmıştır)
+  // Giriş kontrolü
   const isLoggedIn = localStorage.getItem("token");
 
   return (
@@ -29,7 +29,7 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
     >
       <div className="relative">
         <Link
-          to={isLoggedIn ? "/dashboard" : "/"}
+          to={isLoggedIn ? "/dashboard/home" : "/"}
           className="py-6 px-4 flex items-center justify-start gap-3 group"
         >
           <img
@@ -58,49 +58,60 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
       </div>
 
       <div className="m-3">
-        {routes.map(({ layout, title, pages }, key) => (
-          <ul key={key} className="mb-4 flex flex-col gap-1">
-            {title && (
-              <li className="mx-3 mt-4 mb-2">
-                <Typography
-                  variant="small"
-                  color={sidenavType === "dark" ? "white" : "blue-gray"}
-                  className="font-black uppercase opacity-75"
-                >
-                  {title}
-                </Typography>
-              </li>
-            )}
-            {pages.map(({ icon, name, path }) => (
-              <li key={name}>
-                <NavLink to={`/${layout}/${path}`}>
-                  {({ isActive }) => (
-                    <Button
-                      variant={isActive ? "gradient" : "text"}
-                      color={
-                        isActive
-                          ? sidenavColor
-                          : sidenavType === "dark"
-                          ? "white"
-                          : "blue-gray"
-                      }
-                      className="flex items-center gap-3 px-3 capitalize"
-                      fullWidth
-                    >
-                      {icon}
-                      <Typography
-                        color="inherit"
-                        className="font-medium capitalize"
-                      >
-                        {name}
-                      </Typography>
-                    </Button>
-                  )}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        ))}
+        {routes.map(({ layout, title, pages }, key) => {
+          // Auth sayfalarını yalnızca giriş yapılmamışsa göster
+          if (layout === "auth" && isLoggedIn) return null;
+
+          return (
+            <ul key={key} className="mb-4 flex flex-col gap-1">
+              {title && (
+                <li className="mx-3 mt-4 mb-2">
+                  <Typography
+                    variant="small"
+                    color={sidenavType === "dark" ? "white" : "blue-gray"}
+                    className="font-black uppercase opacity-75"
+                  >
+                    {title}
+                  </Typography>
+                </li>
+              )}
+              {pages.map(({ icon, name, path }) => {
+                const finalPath = path.startsWith("/")
+                  ? `/${layout}${path}`
+                  : `/${layout}/${path}`;
+
+                return (
+                  <li key={name}>
+                    <NavLink to={finalPath}>
+                      {({ isActive }) => (
+                        <Button
+                          variant={isActive ? "gradient" : "text"}
+                          color={
+                            isActive
+                              ? sidenavColor
+                              : sidenavType === "dark"
+                              ? "white"
+                              : "blue-gray"
+                          }
+                          className="flex items-center gap-3 px-3 capitalize"
+                          fullWidth
+                        >
+                          {icon}
+                          <Typography
+                            color="inherit"
+                            className="font-medium capitalize"
+                          >
+                            {name}
+                          </Typography>
+                        </Button>
+                      )}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        })}
       </div>
     </aside>
   );

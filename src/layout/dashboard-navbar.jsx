@@ -26,7 +26,7 @@ export function DashboardNavbar() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     toast.success("You have been logged out.");
-    setTimeout(() => navigate("/auth/sign-in"), 1500);
+    setTimeout(() => navigate("/"), 1500);
   };
 
   return (

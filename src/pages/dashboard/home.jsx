@@ -4,13 +4,11 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  Switch,
   Button,
   Tooltip,
   Chip,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { Sparklines, SparklinesLine } from "react-sparklines";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -21,19 +19,12 @@ export function Home() {
   const [topSellers, setTopSellers] = useState([]);
   const [topKeywords, setTopKeywords] = useState([]);
   const [topFavorited, setTopFavorited] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
 
   const token = localStorage.getItem("access_token");
 
-  const toggleDark = () => setDarkMode(!darkMode);
-
   useEffect(() => {
     const config = token
-      ? {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      ? { headers: { Authorization: `Bearer ${token}` } }
       : {};
 
     const fetchData = async () => {
@@ -61,8 +52,7 @@ export function Home() {
     const sections = [];
 
     if (topProducts.length) {
-      sections.push("Top Products");
-      sections.push("Title,Sales");
+      sections.push("Top Products", "Title,Sales");
       topProducts.forEach((item) =>
         sections.push(`"${item.title.replace(/"/g, '""')}",${item.total_sales}`)
       );
@@ -70,8 +60,7 @@ export function Home() {
     }
 
     if (topFavorited.length) {
-      sections.push("Top Favorited");
-      sections.push("Title,Favorites");
+      sections.push("Top Favorited", "Title,Favorites");
       topFavorited.forEach((item) =>
         sections.push(`"${item.title.replace(/"/g, '""')}",${item.favorites}`)
       );
@@ -79,8 +68,7 @@ export function Home() {
     }
 
     if (topSellers.length) {
-      sections.push("Top Sellers");
-      sections.push("Shop Name,Total Sales,Product Count");
+      sections.push("Top Sellers", "Shop Name,Total Sales,Product Count");
       topSellers.forEach((item) =>
         sections.push(`"${item.shop_name.replace(/"/g, '""')}",${item.total_sales},${item.product_count}`)
       );
@@ -88,8 +76,7 @@ export function Home() {
     }
 
     if (topKeywords.length) {
-      sections.push("Top Keywords");
-      sections.push("Keyword,Count");
+      sections.push("Top Keywords", "Keyword,Count");
       topKeywords.forEach((item) =>
         sections.push(`"${item.keyword.replace(/"/g, '""')}",${item.count}`)
       );
@@ -105,17 +92,18 @@ export function Home() {
     document.body.removeChild(link);
   };
 
-  const renderTrend = (value) => {
-    if (value > 50) return <span className="ml-2 text-green-500 font-bold">↑</span>;
-    return <span className="ml-2 text-red-500 font-bold">↓</span>;
-  };
+  const renderTrend = (value) => (
+    <span className={`ml-2 font-bold ${value > 50 ? "text-green-500" : "text-red-500"}`}>
+      {value > 50 ? "↑" : "↓"}
+    </span>
+  );
 
   const renderSparkline = () => (
     <span className="ml-1 text-xs text-blue-400">▁▂▃▅▆▇</span>
   );
 
   const renderCard = (title, icon, items, renderFn) => (
-    <Card className={`w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white"} border border-blue-gray-100 shadow-md hover:shadow-lg transition-all duration-300`}>
+    <Card className="w-full bg-white border border-blue-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
       <CardHeader floated={false} shadow={false} className="p-4 bg-blue-gray-50">
         <Typography variant="h6" className="flex items-center gap-2 text-blue-gray-700">
           {icon}
@@ -123,13 +111,13 @@ export function Home() {
         </Typography>
       </CardHeader>
       <CardBody className="p-4">
-        <ul className="space-y-3">{items.slice(0, 5).map(renderFn)}</ul>
+        <ul className="space-y-4">{items.slice(0, 5).map(renderFn)}</ul>
       </CardBody>
     </Card>
   );
 
   return (
-    <div className={`p-6 min-h-screen transition ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50"}`}>
+    <div className="p-6 min-h-screen bg-gray-50 text-gray-900">
       {/* Üst panel */}
       <div className="flex justify-between items-start mb-6 flex-wrap gap-6">
         <div>
@@ -142,7 +130,6 @@ export function Home() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Switch label="Dark Mode" checked={darkMode} onChange={toggleDark} />
           <Button
             size="sm"
             variant="outlined"
@@ -214,7 +201,7 @@ export function Home() {
               <Typography variant="small" className="font-semibold">
                 {i + 1}. {seller.shop_name}
               </Typography>
-              <Typography variant="small" color="gray" className="text-xs">
+              <Typography variant="small" className="text-xs text-gray-500">
                 Products: {seller.product_count} | Sales: {seller.total_sales}
               </Typography>
             </div>
