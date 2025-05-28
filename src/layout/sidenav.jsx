@@ -73,7 +73,7 @@ export function Sidenav({ brandName = "PixieNest", routes }) {
             )}
             {pages.map(({ icon, name, path }) => (
               <li key={name}>
-                <NavLink to={`/${layout}${path}`}>
+                <NavLink to={`/${layout}/${path}`}>
                   {({ isActive }) => (
                     <Button
                       variant={isActive ? "gradient" : "text"}
