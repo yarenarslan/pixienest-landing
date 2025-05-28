@@ -21,7 +21,7 @@ export function SignIn() {
 
     try {
       const res = await axios.post(
-        `${API_URL}/users/auth/login`,
+        `${API_URL}/auth/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
