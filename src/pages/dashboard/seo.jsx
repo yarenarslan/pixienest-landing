@@ -94,7 +94,7 @@ export default function SEOAnalysisPage() {
           </Typography>
         </CardHeader>
         <CardBody>
-          {/* ✅ Mobil uyumlu form alanı ve Enter ile gönderim */}
+          {/* Mobil uyumlu form alanı ve Enter ile gönderim */}
           <form
             onSubmit={(e) => {
               e.preventDefault();

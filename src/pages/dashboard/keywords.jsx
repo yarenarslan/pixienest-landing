@@ -42,7 +42,7 @@ export function KeywordsPage() {
     fetchKeywords();
   }, []);
 
-  // ✅ Chart verisi
+  // Chart verisi
   const chartData = {
     labels: topKeywords.map((item) => item.keyword),
     datasets: [

@@ -11,7 +11,7 @@ function App() {
   return (
 
     <Routes>
-      {/* 🔐 Dashboard sayfaları sadece giriş yapmış kullanıcıya */}
+      {/* Dashboard sayfaları sadece giriş yapmış kullanıcıya */}
       <Route
         path="/dashboard/*"
         element={
@@ -22,13 +22,13 @@ function App() {
       />
       <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
 
-      {/* 🔓 Giriş / kayıt sayfaları */}
+      {/* Giriş / kayıt sayfaları */}
       <Route path="/auth/*" element={<Auth />} />
 
-      {/* 💻 Landing page (kamuya açık tanıtım sayfası) */}
+      {/* Landing page (kamuya açık tanıtım sayfası) */}
       <Route path="/" element={<Landing />} />
 
-      {/* 🔁 Tüm tanımsız yolları "/" sayfasına yönlendir */}
+      {/* Tüm tanımsız yolları "/" sayfasına yönlendir */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

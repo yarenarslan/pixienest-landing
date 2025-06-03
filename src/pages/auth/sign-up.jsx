@@ -20,7 +20,7 @@ export function SignUp() {
     e.preventDefault();
     setError("");
     try {
-      await axios.post(`${API_URL}/users/auth/register`, {
+      await axios.post(`${API_URL}/register`, {
         email,
         username,
         password,
